@@ -56,6 +56,10 @@ def sendMessage(message, chat):
     requests.get(message_url)
 
 
+#TODO sendStickers()
+#TODO comments
+
+
 # Gets all parameters of a command.
 def getParams(command):
     params = re.split("\s", command)
