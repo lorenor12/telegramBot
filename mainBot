@@ -80,6 +80,17 @@ def reactToCommands(command, chat, user):
     elif command == "kick":
         kickUser(chat, user)
 
+
+def reactToStickers(sticker, emoji, chat, user):
+    sendMessage(emoji, chat)
+
+
+def reactToTextMessage(text, chat, user):
+    if text.lower() == "nö, halts maul":
+        sendMessage("Sry hab nen schlechten Tag.", chat)
+        kickUser(chat, user)
+
+
 # Checks the new messages for commands and specific phrases.
 def checkUpdates(updates):
     for update in updates["result"]:
@@ -87,18 +98,18 @@ def checkUpdates(updates):
             user = str(update["message"]["from"]["id"])
             chat = update["message"]["chat"]["id"]
             if "sticker" in update["message"]:
-                sendMessage(update["message"]["sticker"]["emoji"], chat)
+                emoji = update["message"]["sticker"]["emoji"]
+                sticker = update["message"]["sticker"]["file_id"]
+                reactToStickers(sticker, emoji, chat, user)#
             elif "text" in update["message"]:
                 text = update["message"]["text"]
-                if text.lower() == "nö, halts maul":
-                    sendMessage("Sry hab nen schlechten Tag.", chat)
-                    kickUser(chat, user)
+                reactToTextMessage(text, chat, user)
             elif update["message"]["entities"][0]["type"]:
                 text = update["message"]["text"]
                 reactToCommands(text[1:], chat, user)
         except Exception as e:
             print(e)
-            print("checking for commands failed")
+            print("checking updates failed")
 
 
 # Prints out all updates.
