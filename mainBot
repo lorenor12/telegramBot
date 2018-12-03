@@ -88,14 +88,14 @@ def checkUpdates(updates):
             chat = update["message"]["chat"]["id"]
             if "sticker" in update["message"]:
                 sendMessage(update["message"]["sticker"]["emoji"], chat)
-            elif update["message"]["entities"][0]["type"]:
-                text = update["message"]["text"]
-                reactToCommands(text[1:], chat, user)
             elif "text" in update["message"]:
                 text = update["message"]["text"]
                 if text.lower() == "nö, halts maul":
                     sendMessage("Sry hab nen schlechten Tag.", chat)
                     kickUser(chat, user)
+            elif update["message"]["entities"][0]["type"]:
+                text = update["message"]["text"]
+                reactToCommands(text[1:], chat, user)
         except Exception as e:
             print(e)
             print("checking for commands failed")
