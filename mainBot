@@ -83,19 +83,22 @@ def reactToCommands(command, chat, user):
 # Checks the new messages for commands and specific phrases.
 def checkUpdates(updates):
     for update in updates["result"]:
-        text = update["message"]["text"]
-        chat = update["message"]["chat"]["id"]
-        user = str(update["message"]["from"]["id"])
         try:
-            if update["message"]["entities"][0]["type"]:
+            user = str(update["message"]["from"]["id"])
+            chat = update["message"]["chat"]["id"]
+            if "sticker" in update["message"]:
+                sendMessage(update["message"]["sticker"]["emoji"], chat)
+            elif update["message"]["entities"][0]["type"]:
+                text = update["message"]["text"]
                 reactToCommands(text[1:], chat, user)
+            elif "text" in update["message"]:
+                text = update["message"]["text"]
+                if text.lower() == "nö, halts maul":
+                    sendMessage("Sry hab nen schlechten Tag.", chat)
+                    kickUser(chat, user)
         except Exception as e:
             print(e)
             print("checking for commands failed")
-        if "text" in update["message"]:
-            if text.lower() == "nö, halts maul":
-                sendMessage("Sry hab nen schlechten Tag.", chat)
-                kickUser(chat, user)
 
 
 # Prints out all updates.
