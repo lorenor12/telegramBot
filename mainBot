@@ -56,7 +56,10 @@ def sendMessage(message, chat):
     requests.get(message_url)
 
 
-#TODO sendStickers()
+# Sends a sticker to a Chat using it's ID.
+def sendSticker(sticker, chat):
+    sticker_url = url + "sendSticker?chat_id={}&sticker={}".format(chat, sticker)
+    requests.get(sticker_url)
 
 
 # Gets all parameters of a command.
@@ -87,7 +90,7 @@ def reactToCommands(command, chat, user):
 # Reacts to all and/or certain Stickers.
 def reactToStickers(sticker, emoji, chat, user):
     sendMessage(emoji, chat)
-
+    sendSticker(sticker, chat)
 
 # Reacts to certain text Messages.
 def reactToTextMessage(text, chat, user):
