@@ -57,7 +57,6 @@ def sendMessage(message, chat):
 
 
 #TODO sendStickers()
-#TODO comments
 
 
 # Gets all parameters of a command.
@@ -85,10 +84,12 @@ def reactToCommands(command, chat, user):
         kickUser(chat, user)
 
 
+# Reacts to all and/or certain Stickers.
 def reactToStickers(sticker, emoji, chat, user):
     sendMessage(emoji, chat)
 
 
+# Reacts to certain text Messages.
 def reactToTextMessage(text, chat, user):
     if text.lower() == "nö, halts maul":
         sendMessage("Sry hab nen schlechten Tag.", chat)
